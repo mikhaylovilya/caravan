@@ -4,24 +4,32 @@
   > import lang_test.includes2.concrete_tool
   > EOF
   $ dune exec ../../src/parser/parse.exe ./package_imports.my
+  ((Some ["lang_test"; "parser_test"]),
+   [["lang_test"; "includes"]; ["lang_test"; "includes2"; "concrete_tool"]], 
+   [])
 
   $ cat << EOF > package_annotationtype_no_members.my 
   > package lang_test.parser_test
   > annotation ann1 { }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./package_annotationtype_no_members.my
+  ((Some ["lang_test"; "parser_test"]), [], [([], (Annotation ("ann1", [])))])
 
   $ cat << EOF > package_moduletype_no_members.my 
   > package lang_test.parser_test
   > module mod1 { }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./package_moduletype_no_members.my
+  ((Some ["lang_test"; "parser_test"]), [],
+   [([], (Module ([], "mod1", None, [])))])
 
   $ cat << EOF > package_interfacetype_no_members.my 
   > package lang_test.parser_test
   > interface inter1 { }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./package_interfacetype_no_members.my
+  ((Some ["lang_test"; "parser_test"]), [],
+   [([], (Interface ("inter1", None, [])))])
 
   $ cat << EOF > package_entities_with_members.my 
   > package lang_test.parser_test
@@ -37,6 +45,17 @@
   > }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./package_entities_with_members.my
+  ((Some ["lang_test"; "parser_test"]), [["lang_test"; "includes"]],
+   [([],
+     (Annotation
+        ("ann2",
+         [([], (StringType, "str1", None));
+           ([], (NumberType, "num1", (Some (NumberLiteral 7.))));
+           ([], (NumberType, "num2", (Some (NumberLiteral 8.))));
+           ([], (NumberType, "num3", (Some (NumberLiteral -1.))));
+           ([], (NumberType, "hex1", (Some (NumberLiteral 61865.))));
+           ([], (NumberType, "hex2", (Some (NumberLiteral -160.))))])))
+     ])
 
   $ cat << EOF > string_test.my
   > package lang_test.parser_test
@@ -54,6 +73,19 @@
   > }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./string_test.my
+  ((Some ["lang_test"; "parser_test"]), [],
+   [([],
+     (Module
+        ([], "testModule1", None,
+         [([(["ann1"], None)], (Source ["\\\t\n\r\"'"]));
+           ([(["ann2"],
+              (Some (Value
+                       (StringLiteral
+                          "\n\t\tAUTHORS\n\t\t\t'Cy'\n\t\t\t''\n\t\t\t\\\n\t\t\t'\n\t\t\t\t\r\n\n\t"))))
+              ],
+            (Source ["*.c"]))
+           ])))
+     ])
 
   $ cat << EOF > comment_test.my
   > package lang_test.parser_test
@@ -72,3 +104,10 @@
   > }
   > EOF
   $ dune exec ../../src/parser/parse.exe ./comment_test.my
+  ((Some ["lang_test"; "parser_test"]), [],
+   [([],
+     (Module
+        ([], "comment_module", None,
+         [([], (Opt (NumberType, "num", None)));
+           ([], (Depends [["lang_test"; "deps"]])); ([], (Source ["*.c"]))])))
+     ])

@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - "main"
+      - "master"
 
 env:
   OPAMROOT: /home/opam/.opam
@@ -39,7 +39,6 @@ jobs:
       # - run: sudo apt install libpcre3-dev m4 --yes
     # - run: sudo apt install software-properties-common --yes
     # - run: sudo apt update
-      # - run: eval $(opam env)
       - run: opam install . --deps-only --with-test
       - run: opam exec -- dune build
       - run: opam exec -- dune runtest
