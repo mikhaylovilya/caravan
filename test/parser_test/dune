@@ -1,0 +1,12 @@
+(library
+ (name show)
+ (modules show)
+ (libraries mybuild_parser)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect)))
+
+(cram
+ (deps
+  %{project_root}/src/parser/parse.exe
+  (glob_files %{project_root}/test/parser_test/myfiles/*.my)))

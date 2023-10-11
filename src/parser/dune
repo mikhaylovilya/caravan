@@ -1,0 +1,19 @@
+(menhir
+ ;  (flags --explain --dump-resolved)
+ (modules parser))
+
+(ocamllex lexer)
+
+(library
+ (name mybuild_parser)
+ (wrapped false)
+ ;  (public_name caravan.mybuild_pars1er)
+ (modules parser lexer ast_myfile)
+ (preprocess
+  (pps ppx_deriving.show)))
+
+(executable
+ (name parse)
+ (public_name caravan.mybuild_parser.parse)
+ (modules parse)
+ (libraries mybuild_parser core core_unix.command_unix))
