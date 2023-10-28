@@ -1,0 +1,5 @@
+(library
+ (name mybuild_backend)
+ (wrapped false)
+ (modules genlib)
+ (libraries mybuild_parser core_unix ocamlgraph))
