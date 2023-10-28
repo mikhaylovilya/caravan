@@ -15,6 +15,6 @@
 
 (executable
  (name parse)
- (public_name caravan.mybuild_parser.parse)
+ (public_name caravan.parse)
  (modules parse)
  (libraries mybuild_parser core core_unix.command_unix))

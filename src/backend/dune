@@ -3,3 +3,9 @@
  (wrapped false)
  (modules genlib)
  (libraries mybuild_parser core_unix ocamlgraph))
+
+; (executable
+;  (name gen)
+;  (public_name caravan.gen)
+;  (modules gen)
+;  (libraries mybuild_backend))
