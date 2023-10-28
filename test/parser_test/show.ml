@@ -1,4 +1,4 @@
-open! Ast_myfile
+open! Ast
 
 let%expect_test _ =
   let tree : myfile = Some [ "lang_test"; "p" ], [], [] in

@@ -1,5 +1,5 @@
 %{
-    open Ast_myfile
+    open Ast
 %}
 %token <string> ID
 %token <string> STR

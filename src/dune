@@ -1,3 +1,4 @@
-(library
+(executable
  (public_name caravan)
- (name main))
+ (name compiler)
+ (libraries core))

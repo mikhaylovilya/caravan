@@ -8,7 +8,8 @@
  (name mybuild_parser)
  (wrapped false)
  ;  (public_name caravan.mybuild_pars1er)
- (modules parser lexer ast_myfile)
+ (libraries core)
+ (modules parser lexer ast parselib)
  (preprocess
   (pps ppx_deriving.show)))
 
