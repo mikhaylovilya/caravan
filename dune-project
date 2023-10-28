@@ -21,6 +21,14 @@
  (name caravan)
  (synopsis "Build system for Embox")
  (description "Build system for Embox")
- (depends ocaml dune menhir core core_unix ppx_expect ppx_deriving)
+ (depends
+  ocaml
+  dune
+  menhir
+  core
+  core_unix
+  ppx_expect
+  ppx_deriving
+  ocamlgraph)
  (tags
   (ocaml embox "build system")))

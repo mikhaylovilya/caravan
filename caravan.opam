@@ -16,6 +16,7 @@ depends: [
   "core_unix"
   "ppx_expect"
   "ppx_deriving"
+  "ocamlgraph"
   "odoc" {with-doc}
 ]
 build: [
