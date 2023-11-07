@@ -4,7 +4,7 @@ synopsis: "Build system for Embox"
 description: "Build system for Embox"
 maintainer: ["Ilya Mikhaylov"]
 authors: ["Ilya Mikhaylov"]
-license: "BSD-2-Clause"
+license: "MIT"
 tags: ["ocaml" "embox" "build system"]
 homepage: "https://github.com/mikhaylovilya/caravan"
 bug-reports: "https://github.com/mikhaylovilya/caravan/issues"

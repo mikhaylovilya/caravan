@@ -11,7 +11,7 @@
 
 (maintainers "Ilya Mikhaylov")
 
-(license BSD-2-Clause)
+(license MIT)
 
 ; (documentation https://url/to/documentation)
 
