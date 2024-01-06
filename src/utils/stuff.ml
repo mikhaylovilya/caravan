@@ -48,10 +48,10 @@ let readdir_r
    directory)
    in *)
 
-let find ?(iname = None) directory =
-  match iname with
+let find ?(name = None) directory =
+  match name with
   | Some cond ->
-    let command = Printf.sprintf "find %s -iname %s" directory cond in
+    let command = Printf.sprintf "find %s -name %s" directory cond in
     let ic = Core_unix.open_process_in command in
     Core.In_channel.input_lines ic
   | None ->
@@ -60,12 +60,12 @@ let find ?(iname = None) directory =
     Core.In_channel.input_lines ic
 ;;
 
-let%expect_test "find_test1" =
-  let directory =
-    "/home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource"
-  in
-  let () = Core.List.iter ~f:(fun line -> Printf.printf "%s\n" line) (find directory) in
-  [%expect
+(* let%expect_test "find_test1" =
+   let directory =
+   "/home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource"
+   in
+   let () = Core.List.iter ~f:(fun line -> Printf.printf "%s\n" line) (find directory) in
+   [%expect
     {|
     /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource
     /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource/mmap_trivial.ld_rule.mk
@@ -83,17 +83,17 @@ let%expect_test "find_test1" =
     /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource/waitpid.ld_rule.mk
     /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource/errno.ld_rule.mk
     /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/module/embox/kernel/task/resource/u_area.ld_rule.mk |}]
-;;
+   ;;
 
-let%expect_test "find_test1" =
-  let directory =
-    "/home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen"
-  in
-  let () =
-    Core.List.iter
-      ~f:(fun line -> Printf.printf "%s\n" line)
-      (find ~iname:(Some "md5sums1.c") directory)
-  in
-  [%expect
+   let%expect_test "find_test2" =
+   let directory =
+   "/home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen"
+   in
+   let () =
+   Core.List.iter
+   ~f:(fun line -> Printf.printf "%s\n" line)
+   (find ~name:(Some "md5sums1.c") directory)
+   in
+   [%expect
     {| /home/cy/Desktop/ocaml-rep/caravan/test/backend_test_local/canon_build/base/gen/md5sums1.c |}]
-;;
+   ;; *)

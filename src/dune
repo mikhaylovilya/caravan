@@ -1,13 +1,5 @@
 (executable
  (public_name caravan)
  (name compiler)
- (libraries core core_unix.command_unix mybuild_parser mybuild_backend stuff)
+ (libraries core core_unix.command_unix mybuild_parser mybuild_backend utils)
  (modules compiler))
-
-(library
- (name stuff)
- (libraries core core_unix)
- (modules stuff)
- (inline_tests)
- (preprocess
-  (pps ppx_expect)))

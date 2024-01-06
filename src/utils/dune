@@ -1,0 +1,8 @@
+(library
+ (name utils)
+ (wrapped false)
+ (libraries core core_unix)
+ (modules stuff log)
+ (inline_tests)
+ (preprocess
+  (pps ppx_expect)))
