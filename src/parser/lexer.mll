@@ -18,8 +18,10 @@ let str_chars = [' '-'!' '#'-'[' ']'-'~' '\xA0' '\t']
 let multilevel_str_chars = [' '-'&' '('-'[' ']'-'~' '\xA0' '\t']
 (*  *)
 let singleline_comment_chars = [' '-'~' '\t']
-let non_asterisk = [' '-')' '+'-'~' '\t']
-let non_slash = [' '-'.' '0'-'~' '\t']
+(* let non_asterisk = [' '-')' '+'-'~' '\t'] *)
+let non_asterisk = singleline_comment_chars # '*'
+(* let non_slash = [' '-'.' '0'-'~' '\t'] *)
+let non_slash = singleline_comment_chars # '/'
 (*  *)
 let whitespace = [' ' '\t']+
 let newline = '\r' | '\n' | "\r\n"
@@ -73,16 +75,21 @@ and read_singleline_comment buf =
     parse
     | newline                   {}
     | singleline_comment_chars  { read_singleline_comment buf lexbuf }
-    | _                         { raise (Syntax_error ("Illegal singleline comment: " ^ (Lexing.lexeme lexbuf))) }
+    | _                         { raise (Syntax_error ("Illegal singleline comment character: " ^ (Lexing.lexeme lexbuf))) }
     | eof                       {}
 and read_multiline_comment buf = 
     parse
-    | "*/"          {} 
     | newline       { new_line lexbuf; read_multiline_comment buf lexbuf }
     | non_asterisk  { read_multiline_comment buf lexbuf }
-    | '*' non_slash { read_multiline_comment buf lexbuf }
-    | _             { raise (Syntax_error ("Illegal multiline comment: " ^ (Lexing.lexeme lexbuf))) }
+    | '*' '/'       {} 
+    (* | '*' non_slash { read_multiline_comment buf lexbuf } *)
+    | '*'           { read_multiline_comment buf lexbuf }
+    | _             { raise (Syntax_error ("Illegal multiline comment character: " ^ show_codes (Lexing.lexeme lexbuf))) }
     | eof           { raise (Syntax_error "Multiline comment is not terminated") }
+and read_multiline_comment_asterisk buf = 
+    parse
+    | '/'
+    | non_slash {read_multiline_comment}
 and read_string buf = 
     parse
     | '"'           { STR (Buffer.contents buf) }
